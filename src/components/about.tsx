@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import Rainbow from "../hoc/rainbow";
 
 const About: FunctionComponent = () => (
   <div className="container">
@@ -12,4 +13,4 @@ const About: FunctionComponent = () => (
   </div>
 );
 
-export default About;
+export default Rainbow(About);
