@@ -1,15 +1,41 @@
-import React, { FunctionComponent } from "react";
+import axios from "axios";
+import React, { FunctionComponent, useEffect, useState } from "react";
 
-const Home: FunctionComponent = () => (
-  <div className="container">
-    <h4 className="center">Home</h4>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id dicta iste,
-      vero asperiores quam deleniti eligendi, impedit aperiam enim, perferendis
-      qui. Et reprehenderit voluptatum fuga? Fugiat non debitis assumenda
-      similique.
-    </p>
-  </div>
-);
+type Post = {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+};
+
+const Home: FunctionComponent = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/posts").then(res => {
+      setPosts((res.data as Post[]).slice(0, 10));
+    });
+  }, []);
+
+  const postList = posts ? (
+    posts.map(post => (
+      <div className="post card" key={post.id}>
+        <div className="card-content">
+          <span className="card-title">{post.title}</span>
+          <p>{post.body}</p>
+        </div>
+      </div>
+    ))
+  ) : (
+    <div className="center">No posts yet.</div>
+  );
+
+  return (
+    <div className="container">
+      <h4 className="center">Home</h4>
+      {postList}
+    </div>
+  );
+};
 
 export default Home;
