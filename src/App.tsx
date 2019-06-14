@@ -5,6 +5,7 @@ import About from "./components/about";
 import Contact from "./components/contact";
 import Home from "./components/home";
 import Navbar from "./components/navbar";
+import Post from "./components/post";
 
 const App: FunctionComponent = () => (
   <BrowserRouter>
@@ -13,6 +14,7 @@ const App: FunctionComponent = () => (
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
+      <Route path="/:post_id" component={Post} />
     </div>
   </BrowserRouter>
 );

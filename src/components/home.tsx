@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 type Post = {
   id: number;
@@ -17,11 +18,13 @@ const Home: FunctionComponent = () => {
     });
   }, []);
 
-  const postList = posts ? (
+  const content = posts ? (
     posts.map(post => (
       <div className="post card" key={post.id}>
         <div className="card-content">
-          <span className="card-title">{post.title}</span>
+          <Link to={`/${post.id}`}>
+            <span className="card-title">{post.title}</span>
+          </Link>
           <p>{post.body}</p>
         </div>
       </div>
@@ -33,7 +36,7 @@ const Home: FunctionComponent = () => {
   return (
     <div className="container">
       <h4 className="center">Home</h4>
-      {postList}
+      {content}
     </div>
   );
 };

@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from "react";
 import {} from "react-router-dom";
 
+type History = {
+  push: (path: string) => void;
+};
+
 type ContactProps = {
-  history: {
-    push: (path: string) => void;
-  };
+  history: History;
 };
 
 const Contact: FunctionComponent<ContactProps> = ({ history }) => {
