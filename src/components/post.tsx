@@ -1,38 +1,16 @@
-import axios from "axios";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent } from "react";
+import { connect } from "react-redux";
 
-type Post = {
-  id: number;
-  userId: number;
-  title: string;
-  body: string;
-};
+import { Post as PostInterface, PostState } from "../store/post/types";
 
-type Params = {
-  post_id: number;
-};
-
-type Match = {
-  params: Params;
-};
-
-type PostProps = {
-  match: Match;
-};
+interface PostProps {
+  match: { params: { post_id: string } };
+  post: PostInterface | undefined;
+}
 
 const Post: FunctionComponent<PostProps> = props => {
-  const [post, setPost] = useState<Post | null>(null);
-
-  useEffect(() => {
-    console.log("use EFFECTS RUN");
-    const { post_id } = props.match.params;
-
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${post_id}`)
-      .then(res => {
-        setPost(res.data as Post);
-      });
-  }, [props.match.params]);
+  const { post } = props;
+  console.log(props);
 
   const content = post ? (
     <div className="post">
@@ -46,4 +24,12 @@ const Post: FunctionComponent<PostProps> = props => {
   return <div className="container">{content}</div>;
 };
 
-export default Post;
+const mapStateToProps = (state: PostState, ownProps: PostProps) => {
+  const { post_id } = ownProps.match.params;
+
+  return {
+    post: state.posts.find(post => post.id === parseInt(post_id))
+  };
+};
+
+export default connect(mapStateToProps)(Post);
