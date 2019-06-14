@@ -1,25 +1,16 @@
-import axios from "axios";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
+import { Post, PostState } from "../store/post/types";
 
 import Pokeball from "../pokeball.png";
 
-type Post = {
-  id: number;
-  userId: number;
-  title: string;
-  body: string;
-};
+interface HomeProps {
+  posts: Post[];
+}
 
-const Home: FunctionComponent = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  useEffect(() => {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then(res => {
-      setPosts((res.data as Post[]).slice(0, 10));
-    });
-  }, []);
-
+const Home: FunctionComponent<HomeProps> = ({ posts }) => {
   const content = posts ? (
     posts.map(post => (
       <div className="post card" key={post.id}>
@@ -44,4 +35,8 @@ const Home: FunctionComponent = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state: PostState) => ({
+  posts: state.posts
+});
+
+export default connect(mapStateToProps)(Home);
