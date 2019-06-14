@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import Pokeball from "../pokeball.png";
+
 type Post = {
   id: number;
   userId: number;
@@ -21,9 +23,10 @@ const Home: FunctionComponent = () => {
   const content = posts ? (
     posts.map(post => (
       <div className="post card" key={post.id}>
+        <img src={Pokeball} alt="A pokeball" />
         <div className="card-content">
           <Link to={`/${post.id}`}>
-            <span className="card-title">{post.title}</span>
+            <span className="card-title red-text">{post.title}</span>
           </Link>
           <p>{post.body}</p>
         </div>
@@ -34,7 +37,7 @@ const Home: FunctionComponent = () => {
   );
 
   return (
-    <div className="container">
+    <div className="container home">
       <h4 className="center">Home</h4>
       {content}
     </div>
