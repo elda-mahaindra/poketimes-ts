@@ -2,12 +2,12 @@ import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { Post, PostState } from "../store/post/types";
+import { PostModel, PostStateModel } from "../store/post/types";
 
 import Pokeball from "../pokeball.png";
 
 interface HomeProps {
-  posts: Post[];
+  posts: PostModel[];
 }
 
 const Home: FunctionComponent<HomeProps> = ({ posts }) => {
@@ -35,7 +35,7 @@ const Home: FunctionComponent<HomeProps> = ({ posts }) => {
   );
 };
 
-const mapStateToProps = (state: PostState) => ({
+const mapStateToProps = (state: PostStateModel) => ({
   posts: state.posts
 });
 

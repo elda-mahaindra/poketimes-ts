@@ -1,6 +1,6 @@
-import { PostState, PostAction, POPULATE_POSTS, GET_POST } from "./types";
+import { PostStateModel, PostActionModel, DELETE_POST } from "./types";
 
-const intialState: PostState = {
+const intialState: PostStateModel = {
   posts: [
     {
       userId: 1,
@@ -27,12 +27,13 @@ const intialState: PostState = {
   ]
 };
 
-export const postReducer = (state = intialState, action: PostAction) => {
+export const postReducer = (state = intialState, action: PostActionModel) => {
   switch (action.type) {
-    case POPULATE_POSTS:
-      return state;
-    case GET_POST:
-      return state;
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post.id !== action.id)
+      };
     default:
       return state;
   }
